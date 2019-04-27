@@ -9,6 +9,7 @@ import JDBC_Swing.model.Student;
 import java.sql.SQLException;
 import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,7 @@ import java.sql.*;
 public class StudentDaoImpl implements StudentDAO{
     
     public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+    
 
     /**
      *get connection parameters
@@ -45,7 +47,21 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public List<Student> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initConn();
+        
+        String query = "select * from `student`";
+        
+        ResultSet rs = statement.executeQuery(query);
+        
+        List<Student> studentList = new ArrayList<>();
+        
+        while(rs.next()){
+            studentList.add(new Student(rs.getInt("id"),rs.getString("firstName"),rs.getString("lastName"),rs.getInt("studentId")));
+      }
+        
+        closeConn();
+        
+        return studentList;
     }
     /**
      * Initialize the connection

@@ -1,5 +1,19 @@
 package JDBC_Swing;
 
+import static JDBC_Swing.JDBC_Swing.DRIVER_NAME;
+import JDBC_Swing.model.DAO.StudentDAO;
+import JDBC_Swing.model.DAO.StudentDaoImpl;
+import JDBC_Swing.model.DAO.TeacherDAO;
+import JDBC_Swing.model.DAO.TeacherDaoImpl;
+import JDBC_Swing.model.Student;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,12 +25,19 @@ package JDBC_Swing;
  * @author moham
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
+    public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+    
+    
+    StudentDAO daoStu = new StudentDaoImpl();
+    //TeacherDAO daoTch = new TeacherDaoImpl();    
+    
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public MainForm() throws SQLException {
         initComponents();
+        showStudentsInTable();
     }
 
     /**
@@ -353,7 +374,9 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException {
+        Class.forName(DRIVER_NAME);
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -380,10 +403,37 @@ public class MainForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainForm().setVisible(true);
+                try {
+                    new MainForm().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
+    
+    //Display students in JTable
+    public void showStudentsInTable() throws SQLException{
+        List<Student> allStu = daoStu.findAll();
+        
+        Object[][] row = new Object[allStu.size()][4];
+        
+        for(int i=0; i<allStu.size(); i++){
+            row[i][0] = allStu.get(i).getId();
+            row[i][1] = allStu.get(i).getFirstName();
+            row[i][2] = allStu.get(i).getLastName();
+            row[i][3] = allStu.get(i).getStudentId();
+        }
+         
+        TableModel dm = new DefaultTableModel(
+        row,
+        new String[]{
+            "ID","First Name","Last Name","Student Id"
+        });
+        
+        jTable_student.setModel(dm);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_delete_student;
