@@ -78,7 +78,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextField_firstName_teacher = new javax.swing.JTextField();
         jTextField_id_teacher = new javax.swing.JTextField();
-        jTextField_lastName_teaceher = new javax.swing.JTextField();
+        jTextField_lastName_teacher = new javax.swing.JTextField();
         jTextField_personalId = new javax.swing.JTextField();
         jButton_delete_teacher = new javax.swing.JButton();
         jButton_insert_teacher = new javax.swing.JButton();
@@ -271,9 +271,9 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jTextField_lastName_teaceher.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_lastName_teacher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_lastName_teaceherActionPerformed(evt);
+                jTextField_lastName_teacherActionPerformed(evt);
             }
         });
 
@@ -286,6 +286,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton_delete_teacher.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_delete_teacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/deleteIcon.png"))); // NOI18N
         jButton_delete_teacher.setText("Delete");
+        jButton_delete_teacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_delete_teacherActionPerformed(evt);
+            }
+        });
 
         jButton_insert_teacher.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_insert_teacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/insertIcon.png"))); // NOI18N
@@ -317,7 +322,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextField_firstName_teacher, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_lastName_teaceher, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_lastName_teacher, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_personalId, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_id_teacher, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -348,7 +353,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_lastName_teaceher, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField_lastName_teacher, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton_insert_teacher)
                         .addGap(18, 18, 18)
@@ -398,9 +403,9 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_id_teacherActionPerformed
 
-    private void jTextField_lastName_teaceherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_lastName_teaceherActionPerformed
+    private void jTextField_lastName_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_lastName_teacherActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_lastName_teaceherActionPerformed
+    }//GEN-LAST:event_jTextField_lastName_teacherActionPerformed
 
     private void jTextField_personalIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_personalIdActionPerformed
         // TODO add your handling code here:
@@ -468,7 +473,7 @@ public class MainForm extends javax.swing.JFrame {
         TableModel model = jTable_teacher.getModel();
         jTextField_id_teacher.setText(model.getValueAt(i, 0).toString());
         jTextField_firstName_teacher.setText(model.getValueAt(i, 1).toString());
-        jTextField_lastName_teaceher.setText(model.getValueAt(i, 2).toString());
+        jTextField_lastName_teacher.setText(model.getValueAt(i, 2).toString());
         jTextField_personalId.setText(model.getValueAt(i, 3).toString());
     }//GEN-LAST:event_jTable_teacherMouseClicked
 
@@ -476,7 +481,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         Teacher tchr = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
                 jTextField_firstName_teacher.getText(),
-        jTextField_lastName_teaceher.getText(),
+        jTextField_lastName_teacher.getText(),
         Integer.parseInt(jTextField_personalId.getText()));
         
         try {
@@ -485,6 +490,20 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton_insert_teacherActionPerformed
+
+    private void jButton_delete_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_teacherActionPerformed
+        // TODO add your handling code here:
+        Teacher stu = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
+                jTextField_firstName_teacher.getText(),
+        jTextField_LastName_techaer.getText(),
+        Integer.parseInt(jTextField_studentId.getText()));
+        
+        try {
+            daoStu.delete(stu);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_delete_teacherActionPerformed
 
     /**
      * @param args the command line arguments
@@ -600,7 +619,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_firstName_teacher;
     private javax.swing.JTextField jTextField_id_student;
     private javax.swing.JTextField jTextField_id_teacher;
-    private javax.swing.JTextField jTextField_lastName_teaceher;
+    private javax.swing.JTextField jTextField_lastName_teacher;
     private javax.swing.JTextField jTextField_personalId;
     private javax.swing.JTextField jTextField_studentId;
     // End of variables declaration//GEN-END:variables
