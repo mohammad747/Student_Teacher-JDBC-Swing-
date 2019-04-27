@@ -304,6 +304,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton_update_teacher.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_update_teacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/updateIcon.png"))); // NOI18N
         jButton_update_teacher.setText("Update");
+        jButton_update_teacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_update_teacherActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -423,6 +428,12 @@ public class MainForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            showStudentsInTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton_insert_studentActionPerformed
 
     private void jTable_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_studentMouseClicked
@@ -450,6 +461,12 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        try {
+            showStudentsInTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton_update_studentActionPerformed
 
     private void jButton_delete_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_studentActionPerformed
@@ -461,6 +478,12 @@ public class MainForm extends javax.swing.JFrame {
         
         try {
             daoStu.delete(stu);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            showStudentsInTable();
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -489,21 +512,53 @@ public class MainForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            showTeachersInTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton_insert_teacherActionPerformed
 
     private void jButton_delete_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_teacherActionPerformed
         // TODO add your handling code here:
-        Teacher stu = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
+        Teacher tchr = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
                 jTextField_firstName_teacher.getText(),
-        jTextField_LastName_techaer.getText(),
-        Integer.parseInt(jTextField_studentId.getText()));
+        jTextField_lastName_teacher.getText(),
+        Integer.parseInt(jTextField_personalId.getText()));
         
         try {
-            daoStu.delete(stu);
+            daoTchr.delete(tchr);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            showTeachersInTable();
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton_delete_teacherActionPerformed
+
+    private void jButton_update_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_update_teacherActionPerformed
+        // TODO add your handling code here:
+        Teacher tchr = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
+                jTextField_firstName_teacher.getText(),
+        jTextField_lastName_teacher.getText(),
+        Integer.parseInt(jTextField_personalId.getText()));
+        
+        try {
+            daoTchr.update(tchr);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            showTeachersInTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_update_teacherActionPerformed
 
     /**
      * @param args the command line arguments

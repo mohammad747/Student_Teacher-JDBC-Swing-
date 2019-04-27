@@ -63,7 +63,7 @@ public class TeacherDaoImpl implements TeacherDAO{
     @Override
     public void update(Teacher teacher) throws SQLException {
         
-        String query = "UPDATE `teacher` SET `id`='"+teacher.getId()+"',`firstName`='"+teacher.getFirstName()+"',`lastName`='"+teacher.getLastName()+"',`studentId`='"+teacher.getPersonalID()+"' WHERE `id` = "+teacher.getId();
+        String query = "UPDATE `teacher` SET `id`='"+teacher.getId()+"',`firstName`='"+teacher.getFirstName()+"',`lastName`='"+teacher.getLastName()+"',`personalId`='"+teacher.getPersonalID()+"' WHERE `id` = "+teacher.getId();
         
         initConn();
         
