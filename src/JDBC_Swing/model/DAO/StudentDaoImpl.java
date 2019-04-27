@@ -5,11 +5,13 @@
  */
 package JDBC_Swing.model.DAO;
 
+import JDBC_Swing.MainForm;
 import JDBC_Swing.model.Student;
 import java.sql.SQLException;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,10 +34,11 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public void insert(Student student) throws SQLException {
-        initConn();
-
+        
         String query = "INSERT INTO `student`(`id`, `firstName`, `lastName`, `studentId`) VALUES ('"+student.getId()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getStudentId()+"')";
-                
+        
+        initConn(query);
+
 
         statement.executeUpdate(query);
 
@@ -44,14 +47,23 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public void delete(Student student) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "DELETE FROM `student` WHERE `id`="+student.getId();
+        
+        initConn(query);
+        
+        
+        
+        statement.executeUpdate(query);
+        
+        closeConn();  
     }
 
     @Override
     public void update(Student student) throws SQLException {
-        initConn();
         
         String query = "UPDATE `student` SET `id`='"+student.getId()+"',`firstName`='"+student.getFirstName()+"',`lastName`='"+student.getLastName()+"',`studentId`='"+student.getStudentId()+"' WHERE `id` = "+student.getId();
+        
+        initConn(query);
         
         statement.executeUpdate(query);
         
@@ -60,9 +72,12 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public List<Student> findAll() throws SQLException {
-        initConn();
-        
         String query = "select * from `student`";
+        
+        
+        initConn(query);
+        
+        
         
         ResultSet rs = statement.executeQuery(query);
         
@@ -80,9 +95,15 @@ public class StudentDaoImpl implements StudentDAO{
      * Initialize the connection
      * @throws SQLException 
      */
-    private void initConn() throws SQLException {
+    private void initConn(String query) throws SQLException {
         conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         statement = conn.createStatement();
+//        if(statement.executeUpdate(query)==1){
+//            MainForm mainForm = null;
+//            DefaultTableModel model = (DefaultTableModel)mainForm.getjTable_student().getModel();
+//            model.setRowCount(0);
+//            mainForm.showStudentsInTable();
+//        }
     }
     /**
      * Close the connection

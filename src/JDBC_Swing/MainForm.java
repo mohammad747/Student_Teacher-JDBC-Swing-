@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -38,6 +39,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() throws SQLException {
         initComponents();
         showStudentsInTable();
+        
     }
 
     /**
@@ -137,6 +139,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton_delete_student.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_delete_student.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/deleteIcon.png"))); // NOI18N
         jButton_delete_student.setText("Delete");
+        jButton_delete_student.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_delete_studentActionPerformed(evt);
+            }
+        });
 
         jButton_insert_student.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_insert_student.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/insertIcon.png"))); // NOI18N
@@ -426,6 +433,20 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_update_studentActionPerformed
 
+    private void jButton_delete_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_studentActionPerformed
+        // TODO add your handling code here:
+        Student stu = new Student(Integer.parseInt(jTextField_id_student.getText()),
+                jTextField_firstName_student.getText(),
+        jTextField_LastName_student.getText(),
+        Integer.parseInt(jTextField_studentId.getText()));
+        
+        try {
+            daoStu.delete(stu);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_delete_studentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -487,7 +508,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         
         jTable_student.setModel(model);
+        
     }
+    
+//    public void refreshJtableData() throws SQLException{
+//        DefaultTableModel model = (DefaultTableModel)jTable_student.getModel();
+//        model.setRowCount(0);
+//        showStudentsInTable();
+//    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -521,4 +549,15 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_personalId;
     private javax.swing.JTextField jTextField_studentId;
     // End of variables declaration//GEN-END:variables
+
+    public JTable getjTable_student() {
+        return jTable_student;
+    }
+
+    public JTable getjTable_teacher() {
+        return jTable_teacher;
+    }
+
+
+
 }

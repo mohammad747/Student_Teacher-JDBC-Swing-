@@ -15,6 +15,13 @@ public class Student {
     private String lastName;
     private int studentId;
 
+    /**
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param studentId
+     */
     public Student(int id, String firstName, String lastName, int studentId) {
         this.id = id;
         this.firstName = firstName;
@@ -22,18 +29,34 @@ public class Student {
         this.studentId = studentId;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStudentId() {
         return studentId;
     }
