@@ -32,7 +32,14 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public void insert(Student student) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initConn();
+
+        String query = "INSERT INTO `student`(`id`, `firstName`, `lastName`, `studentId`) VALUES ('"+student.getId()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getStudentId()+"')";
+                
+
+        statement.executeUpdate(query);
+
+        closeConn();
     }
 
     @Override
@@ -42,7 +49,13 @@ public class StudentDaoImpl implements StudentDAO{
 
     @Override
     public void update(Student student) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initConn();
+        
+        String query = "UPDATE `student` SET `id`='"+student.getId()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getStudentId()+"";
+        
+        statement.executeUpdate(query);
+        
+        closeConn();
     }
 
     @Override

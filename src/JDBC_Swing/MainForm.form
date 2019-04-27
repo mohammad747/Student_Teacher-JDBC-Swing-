@@ -178,6 +178,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable_studentMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -254,6 +257,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Insert"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_insert_studentActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton_update_student">
               <Properties>
@@ -265,6 +271,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Update"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_update_studentActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

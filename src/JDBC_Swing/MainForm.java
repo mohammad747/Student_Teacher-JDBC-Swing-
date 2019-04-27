@@ -91,6 +91,11 @@ public class MainForm extends javax.swing.JFrame {
                 "ID", "First Name", "Last Name", "Student Id"
             }
         ));
+        jTable_student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_studentMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_student);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -136,10 +141,20 @@ public class MainForm extends javax.swing.JFrame {
         jButton_insert_student.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_insert_student.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/insertIcon.png"))); // NOI18N
         jButton_insert_student.setText("Insert");
+        jButton_insert_student.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_insert_studentActionPerformed(evt);
+            }
+        });
 
         jButton_update_student.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_update_student.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/updateIcon.png"))); // NOI18N
         jButton_update_student.setText("Update");
+        jButton_update_student.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_update_studentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -371,6 +386,46 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_personalIdActionPerformed
 
+    private void jButton_insert_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_insert_studentActionPerformed
+        // TODO add your handling code here:
+        Student stu = new Student(Integer.parseInt(jTextField_id_student.getText()),
+                jTextField_firstName_student.getText(),
+        jTextField_LastName_student.getText(),
+        Integer.parseInt(jTextField_studentId.getText()));
+        
+        try {
+            daoStu.insert(stu);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_insert_studentActionPerformed
+
+    private void jTable_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_studentMouseClicked
+        // Display selected row in JTextField
+        int i = jTable_student.getSelectedRow();
+        TableModel model = jTable_student.getModel();
+        jTextField_id_student.setText(model.getValueAt(i, 0).toString());
+        jTextField_firstName_student.setText(model.getValueAt(i, 1).toString());
+        jTextField_LastName_student.setText(model.getValueAt(i, 2).toString());
+        jTextField_studentId.setText(model.getValueAt(i, 3).toString());
+        
+        
+    }//GEN-LAST:event_jTable_studentMouseClicked
+
+    private void jButton_update_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_update_studentActionPerformed
+        // TODO add your handling code here:
+        Student stu = new Student(Integer.parseInt(jTextField_id_student.getText()),
+                jTextField_firstName_student.getText(),
+        jTextField_LastName_student.getText(),
+        Integer.parseInt(jTextField_studentId.getText()));
+        
+        try {
+            daoStu.update(stu);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_update_studentActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -425,13 +480,13 @@ public class MainForm extends javax.swing.JFrame {
             row[i][3] = allStu.get(i).getStudentId();
         }
          
-        TableModel dm = new DefaultTableModel(
+        TableModel model = new DefaultTableModel(
         row,
         new String[]{
             "ID","First Name","Last Name","Student Id"
         });
         
-        jTable_student.setModel(dm);
+        jTable_student.setModel(model);
     }
     
 
