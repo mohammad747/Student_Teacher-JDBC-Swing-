@@ -51,7 +51,7 @@ public class StudentDaoImpl implements StudentDAO{
     public void update(Student student) throws SQLException {
         initConn();
         
-        String query = "UPDATE `student` SET `id`='"+student.getId()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getStudentId()+"";
+        String query = "UPDATE `student` SET `id`='"+student.getId()+"',`firstName`='"+student.getFirstName()+"',`lastName`='"+student.getLastName()+"',`studentId`='"+student.getStudentId()+"' WHERE `id` = "+student.getId();
         
         statement.executeUpdate(query);
         
