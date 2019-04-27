@@ -6,6 +6,7 @@ import JDBC_Swing.model.DAO.StudentDaoImpl;
 import JDBC_Swing.model.DAO.TeacherDAO;
 import JDBC_Swing.model.DAO.TeacherDaoImpl;
 import JDBC_Swing.model.Student;
+import JDBC_Swing.model.Teacher;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class MainForm extends javax.swing.JFrame {
     
     
     StudentDAO daoStu = new StudentDaoImpl();
-    //TeacherDAO daoTch = new TeacherDaoImpl();    
+    TeacherDAO daoTchr = new TeacherDaoImpl();    
     
     /**
      * Creates new form MainForm
@@ -39,6 +40,8 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() throws SQLException {
         initComponents();
         showStudentsInTable();
+        showTeachersInTable();
+        
         
     }
 
@@ -237,6 +240,11 @@ public class MainForm extends javax.swing.JFrame {
                 "ID", "First Name", "Last Name", "Personal Id"
             }
         ));
+        jTable_teacher.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_teacherMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_teacher);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -282,6 +290,11 @@ public class MainForm extends javax.swing.JFrame {
         jButton_insert_teacher.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_insert_teacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/insertIcon.png"))); // NOI18N
         jButton_insert_teacher.setText("Insert");
+        jButton_insert_teacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_insert_teacherActionPerformed(evt);
+            }
+        });
 
         jButton_update_teacher.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jButton_update_teacher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/updateIcon.png"))); // NOI18N
@@ -431,6 +444,7 @@ public class MainForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButton_update_studentActionPerformed
 
     private void jButton_delete_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_studentActionPerformed
@@ -446,6 +460,31 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton_delete_studentActionPerformed
+
+    private void jTable_teacherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_teacherMouseClicked
+        // TODO add your handling code here:\
+        // Display selected row in JTextField
+        int i = jTable_teacher.getSelectedRow();
+        TableModel model = jTable_teacher.getModel();
+        jTextField_id_teacher.setText(model.getValueAt(i, 0).toString());
+        jTextField_firstName_teacher.setText(model.getValueAt(i, 1).toString());
+        jTextField_lastName_teaceher.setText(model.getValueAt(i, 2).toString());
+        jTextField_personalId.setText(model.getValueAt(i, 3).toString());
+    }//GEN-LAST:event_jTable_teacherMouseClicked
+
+    private void jButton_insert_teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_insert_teacherActionPerformed
+        // TODO add your handling code here:
+        Teacher tchr = new Teacher(Integer.parseInt(jTextField_id_teacher.getText()),
+                jTextField_firstName_teacher.getText(),
+        jTextField_lastName_teaceher.getText(),
+        Integer.parseInt(jTextField_personalId.getText()));
+        
+        try {
+            daoTchr.insert(tchr);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_insert_teacherActionPerformed
 
     /**
      * @param args the command line arguments
@@ -511,12 +550,28 @@ public class MainForm extends javax.swing.JFrame {
         
     }
     
-//    public void refreshJtableData() throws SQLException{
-//        DefaultTableModel model = (DefaultTableModel)jTable_student.getModel();
-//        model.setRowCount(0);
-//        showStudentsInTable();
-//    }
-    
+    //Display teacher in JTable
+    public void showTeachersInTable() throws SQLException{
+        List<Teacher> allTchr = daoTchr.findAll();
+        
+        Object[][] row = new Object[allTchr.size()][4];
+        
+        for(int i=0; i<allTchr.size(); i++){
+            row[i][0] = allTchr.get(i).getId();
+            row[i][1] = allTchr.get(i).getFirstName();
+            row[i][2] = allTchr.get(i).getLastName();
+            row[i][3] = allTchr.get(i).getPersonalID();
+        }
+         
+        TableModel model = new DefaultTableModel(
+        row,
+        new String[]{
+            "ID","First Name","Last Name","Personal ID"
+        });
+        
+        jTable_teacher.setModel(model);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_delete_student;
@@ -557,7 +612,4 @@ public class MainForm extends javax.swing.JFrame {
     public JTable getjTable_teacher() {
         return jTable_teacher;
     }
-
-
-
 }

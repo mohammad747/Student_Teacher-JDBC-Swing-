@@ -37,7 +37,7 @@ public class StudentDaoImpl implements StudentDAO{
         
         String query = "INSERT INTO `student`(`id`, `firstName`, `lastName`, `studentId`) VALUES ('"+student.getId()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getStudentId()+"')";
         
-        initConn(query);
+        initConn();
 
 
         statement.executeUpdate(query);
@@ -49,7 +49,7 @@ public class StudentDaoImpl implements StudentDAO{
     public void delete(Student student) throws SQLException {
         String query = "DELETE FROM `student` WHERE `id`="+student.getId();
         
-        initConn(query);
+        initConn();
         
         
         
@@ -63,9 +63,10 @@ public class StudentDaoImpl implements StudentDAO{
         
         String query = "UPDATE `student` SET `id`='"+student.getId()+"',`firstName`='"+student.getFirstName()+"',`lastName`='"+student.getLastName()+"',`studentId`='"+student.getStudentId()+"' WHERE `id` = "+student.getId();
         
-        initConn(query);
+        initConn();
         
         statement.executeUpdate(query);
+       
         
         closeConn();
     }
@@ -75,10 +76,8 @@ public class StudentDaoImpl implements StudentDAO{
         String query = "select * from `student`";
         
         
-        initConn(query);
-        
-        
-        
+        initConn();
+
         ResultSet rs = statement.executeQuery(query);
         
         List<Student> studentList = new ArrayList<>();
@@ -95,15 +94,10 @@ public class StudentDaoImpl implements StudentDAO{
      * Initialize the connection
      * @throws SQLException 
      */
-    private void initConn(String query) throws SQLException {
+    private Connection initConn() throws SQLException {
         conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         statement = conn.createStatement();
-//        if(statement.executeUpdate(query)==1){
-//            MainForm mainForm = null;
-//            DefaultTableModel model = (DefaultTableModel)mainForm.getjTable_student().getModel();
-//            model.setRowCount(0);
-//            mainForm.showStudentsInTable();
-//        }
+        return conn;
     }
     /**
      * Close the connection
@@ -113,5 +107,25 @@ public class StudentDaoImpl implements StudentDAO{
         statement.close();
         conn.close();
     }
+//    public void executeSQlQuery(String query) throws SQLException
+//   {
+//       Connection con = initConn();
+//       Statement st;
+//       try{
+//           st = con.createStatement();
+//           if((st.executeUpdate(query)) == 1)
+//           {
+//               // refresh jtable data
+//               MainForm mainForm= null;
+//               DefaultTableModel model = (DefaultTableModel)mainForm.getjTable_student().getModel();
+//               model.setRowCount(0);
+//               mainForm.showStudentsInTable();
+//               
+//               
+//           }
+//       }catch(Exception ex){
+//           ex.printStackTrace();
+//       }
+//   }
     
 }

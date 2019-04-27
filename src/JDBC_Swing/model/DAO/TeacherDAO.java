@@ -5,7 +5,6 @@
  */
 package JDBC_Swing.model.DAO;
 
-import JDBC_Swing.model.Student;
 import JDBC_Swing.model.Teacher;
 import java.sql.SQLException;
 import java.util.List;
